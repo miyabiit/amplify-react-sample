@@ -1,0 +1,10 @@
+type Todo 
+    @model
+    @key(name: "SortByName", fields:["owner", "name"], queryField: "listTodosSortedByName" )
+{
+  id: ID!
+  name: String!
+  owner: String
+  updatedAt: AWSDateTime
+  createdAt: AWSDateTime
+}
