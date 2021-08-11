@@ -46,7 +46,7 @@ function App() {
   return (
     <div className="App">
       <p>user: { user != null && user.username }</p>
-      <button onClick={createNewTodo}>Add Todo</button>
+      <button onClick={createNewTodo}>Add Todo, please.</button>
       <div>
         {state.todos.length > 0 ?
           state.todos.map((todo) => <p key={todo.id}>{todo.name} ({todo.createdAt})</p>):
