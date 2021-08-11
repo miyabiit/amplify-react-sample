@@ -2,6 +2,7 @@ import React, { useState, useEffect, useReducer } from 'react';
 import API, { graphqlOperation } from '@aws-amplify/api';
 import { createTodo } from './graphql/mutations';
 import { onCreateTodo } from './graphql/subscriptions';
+import {withAuthenticator, AmplifySignOut} from '@aws-amplify/ui-react'
 
 import './App.css';
 
@@ -53,8 +54,9 @@ function App() {
           <p>Add some todos!</p>
         }
       </div>
+      <AmplifySignOut/>
     </div>
   );
 }
 
-export default App;
+export default withAuthenticator(App);
