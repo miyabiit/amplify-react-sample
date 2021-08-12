@@ -5,6 +5,9 @@ import { onCreateTodo } from './graphql/subscriptions';
 import {withAuthenticator, AmplifySignOut} from '@aws-amplify/ui-react'
 
 import './App.css';
+import  { Grid } from '@material-ui/core';
+import Header from './components/Header';
+import Content from './components/Content';
 
 const QUERY = 'QUERY';
 const SUBSCRIPTION = 'SUBSCRIPTION';
@@ -45,17 +48,33 @@ function App() {
   }, []);
   
   return (
-    <div className="App">
-      <p>user: { user != null && user.username }</p>
-      <button onClick={createNewTodo}>Add Todo, please.</button>
-      <div>
-        {state.todos.length > 0 ?
-          state.todos.map((todo) => <p key={todo.id}>{todo.name} ({todo.createdAt})</p>):
-          <p>Add some todos!</p>
-        }
-      </div>
-      <AmplifySignOut/>
-    </div>
+    <Grid container direction="column">
+      <Grid item>
+        <Header />
+      </Grid>
+      <Grid item container>
+      <Grid sm={2} />
+      <Grid sm={8}>
+        <p>user: { user != null && user.username }</p>
+        <button onClick={createNewTodo}>Add Todo, please.</button>
+        <div>
+          {state.todos.length > 0 ?
+            state.todos.map((todo) => <p key={todo.id}>{todo.name} ({todo.createdAt})</p>):
+            <p>Add some todos!</p>
+          }
+        </div>
+      </Grid>
+      <Grid sm={2} />
+      </Grid>
+      <Grid item container>
+        <Grid sm={1} />
+        <Grid xs={12} sm={10}>
+          <Content />
+        </Grid>
+        <Grid sm={1} />
+      </Grid>
+        <AmplifySignOut/>
+    </Grid>
   );
 }
 
