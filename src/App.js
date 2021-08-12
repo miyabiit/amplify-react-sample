@@ -3,6 +3,7 @@ import API, { graphqlOperation } from '@aws-amplify/api';
 import { createTodo } from './graphql/mutations';
 import { onCreateTodo } from './graphql/subscriptions';
 import {withAuthenticator, AmplifySignOut} from '@aws-amplify/ui-react'
+import {Auth} from 'aws-amplify';
 
 import './App.css';
 import  { Grid } from '@material-ui/core';
@@ -34,9 +35,14 @@ async function createNewTodo() {
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [user] = useState(null);
+  const [username, setUsername] = useState();
   
   useEffect(() => {
+    // ログインユーザー名の取得
+    Auth.currentAuthenticatedUser().then(user => {
+      setUsername(user.username);
+    }).catch(err => {console.log(err)});
+    
     const subscription = API.graphql(graphqlOperation(onCreateTodo)).subscribe({
       next: (eventData) => {
         const todo = eventData.value.data.onCreateTodo;
@@ -55,7 +61,7 @@ function App() {
       <Grid item container>
       <Grid sm={2} />
       <Grid sm={8}>
-        <p>user: { user != null && user.username }</p>
+        <p>user: {username}</p>
         <button onClick={createNewTodo}>Add Todo, please.</button>
         <div>
           {state.todos.length > 0 ?
